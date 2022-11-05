@@ -13,7 +13,8 @@ const API_ENDPOINT = "https://hn.algolia.com/api/v1/search?";
 const initialState = {
   loading: true,
   query: "node",
-  stories: [],
+  hits: [],
+  nbPages: 0,
 };
 
 const AppContext = React.createContext();
@@ -27,10 +28,14 @@ const AppProvider = ({ children }) => {
     try {
       const response = await fetch(`${API_ENDPOINT}${urlQuery}`);
       const data = await response.json();
-      console.log(response, data, data.hits);
-      dispatch({ type: SET_STORIES, payload: data.hits });
+      // console.log(response, data, data.hits);
+      dispatch({
+        type: SET_STORIES,
+        payload: { hits: data.hits, nbPages: data.nbHits },
+      });
     } catch (error) {
       console.log(error);
+      //TODO: set loading to false
     }
   };
 

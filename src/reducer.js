@@ -7,9 +7,14 @@ import {
 } from "./actions";
 
 const reducer = (state, action) => {
-  switch (action) {
+  switch (action.type) {
     case SET_STORIES:
-      return { ...state, stories: action.payload, loading: false };
+      return {
+        ...state,
+        hits: action.payload.hits,
+        nbPages: action.payload.nbPages,
+        loading: false,
+      };
     case SET_LOADING:
       return { ...state, loading: true };
   }

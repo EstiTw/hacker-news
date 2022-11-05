@@ -22,8 +22,10 @@ const reducer = (state, action) => {
       if (action.payload === "prev")
         newPage = state.page > 0 ? state.page - 1 : state.nbPages - 1;
       else newPage = state.page < state.nbPages - 1 ? state.page + 1 : 0;
-      console.log("newPage", newPage);
       return { ...state, page: newPage };
+    }
+    case HANDLE_SEARCH: {
+      return { ...state, query: action.payload, page: 0 };
     }
   }
 

@@ -17,7 +17,16 @@ const reducer = (state, action) => {
       };
     case SET_LOADING:
       return { ...state, loading: true };
+    case HANDLE_PAGE: {
+      let newPage;
+      if (action.payload === "prev")
+        newPage = state.page > 0 ? state.page - 1 : state.nbPages - 1;
+      else newPage = state.page < state.nbPages - 1 ? state.page + 1 : 0;
+      console.log("newPage", newPage);
+      return { ...state, page: newPage };
+    }
   }
+
   return state;
 };
 export default reducer;

@@ -15,6 +15,7 @@ const initialState = {
   query: "node",
   hits: [],
   nbPages: 0,
+  page: 0,
 };
 
 const AppContext = React.createContext();
@@ -22,16 +23,21 @@ const AppContext = React.createContext();
 const AppProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
+  const togglePage = (type) => {
+    dispatch({ type: HANDLE_PAGE, payload: type });
+  };
+
   const fetchItems = async () => {
     dispatch({ type: SET_LOADING });
     const urlQuery = `query=${state.query}`;
+    const urlPage = `page=${state.page}`;
     try {
-      const response = await fetch(`${API_ENDPOINT}${urlQuery}`);
+      const response = await fetch(`${API_ENDPOINT}${urlQuery}&${urlPage}`);
       const data = await response.json();
-      // console.log(response, data, data.hits);
+      // console.log(urlPage, data);
       dispatch({
         type: SET_STORIES,
-        payload: { hits: data.hits, nbPages: data.nbHits },
+        payload: { hits: data.hits, nbPages: data.nbPages },
       });
     } catch (error) {
       console.log(error);
@@ -41,10 +47,12 @@ const AppProvider = ({ children }) => {
 
   useEffect(() => {
     fetchItems();
-  }, []);
+  }, [state.page]);
 
   return (
-    <AppContext.Provider value={{ ...state }}>{children}</AppContext.Provider>
+    <AppContext.Provider value={{ ...state, togglePage }}>
+      {children}
+    </AppContext.Provider>
   );
 };
 // make sure use

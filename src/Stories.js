@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { useGlobalContext } from "./context";
 
 const Stories = () => {
-  const { loading, hits } = useGlobalContext();
+  const { loading, hits, removeStory } = useGlobalContext();
 
   useEffect(() => {}, [hits]);
 
@@ -29,7 +29,9 @@ const Stories = () => {
               <a href={url} alt={title} className="read-link">
                 read more
               </a>
-              <button className="remove-btn">remove</button>
+              <button className="remove-btn" onClick={() => removeStory(id)}>
+                remove
+              </button>
             </div>
           </article>
         );

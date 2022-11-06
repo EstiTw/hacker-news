@@ -3,11 +3,9 @@ import React, { useEffect } from "react";
 import { useGlobalContext } from "./context";
 
 const Stories = () => {
-  const { loading, hits, removeStory } = useGlobalContext();
+  const { isLoading, hits, removeStory } = useGlobalContext();
 
-  useEffect(() => {}, [hits]);
-
-  if (loading) return <div className="spinner-container loading"></div>;
+  if (isLoading) return <div className="loading" />;
   return (
     <section className="stories">
       {hits.map((story) => {
@@ -26,7 +24,13 @@ const Stories = () => {
               {points} by <span>{author} |</span> {comments} comments
             </p>
             <div>
-              <a href={url} alt={title} className="read-link">
+              <a
+                href={url}
+                alt={title}
+                className="read-link"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 read more
               </a>
               <button className="remove-btn" onClick={() => removeStory(id)}>

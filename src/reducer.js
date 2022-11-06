@@ -13,10 +13,10 @@ const reducer = (state, action) => {
         ...state,
         hits: action.payload.hits,
         nbPages: action.payload.nbPages,
-        loading: false,
+        isLoading: false,
       };
     case SET_LOADING:
-      return { ...state, loading: true };
+      return { ...state, isLoading: true };
     case HANDLE_SEARCH: {
       return { ...state, query: action.payload, page: 0 };
     }
@@ -26,14 +26,19 @@ const reducer = (state, action) => {
         hits: state.hits.filter((story) => story.objectID !== action.payload),
       };
     case HANDLE_PAGE: {
-      let newPage;
-      if (action.payload === "prev")
-        newPage = state.page > 0 ? state.page - 1 : state.nbPages - 1;
-      else newPage = state.page < state.nbPages - 1 ? state.page + 1 : 0;
-      return { ...state, page: newPage };
+      if (action.payload === "inc") {
+        let nextPage = state.page + 1;
+        if (nextPage > state.nbPages - 1) nextPage = 0;
+        return { ...state, page: nextPage };
+      }
+      if (action.payload === "dec") {
+        let prevPage = state.page - 1;
+        if (prevPage < 0) prevPage = state.nbPages - 1;
+        return { ...state, page: prevPage };
+      }
     }
+    default:
+      throw new Error(`no matching "${action.type}" action type`);
   }
-
-  return state;
 };
 export default reducer;

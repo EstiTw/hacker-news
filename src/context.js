@@ -28,7 +28,6 @@ const AppProvider = ({ children }) => {
     try {
       const response = await fetch(url);
       const data = await response.json();
-      //TODO: handle - data is empty array, nbPages == 0
       dispatch({
         type: SET_STORIES,
         payload: { hits: data.hits, nbPages: data.nbPages },

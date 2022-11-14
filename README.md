@@ -8,18 +8,14 @@ https://esti-react-hacker-news.netlify.app/
 
 ## Usage
 
-### Fake Store API
+### HN Search API
 
-I use opentdb API, you can read the [opentdb docs](https://opentdb.com/api_config.php) here.
+I used HN Search API, you can read the [HN Search docs](https://hn.algolia.com/api) here.
 
-### Install
 
+## Installing
+
+```bash
+$ npm install && start
 ```
-npm install
-```
 
-### Run
-
-```
-npm start
-```
